@@ -44,6 +44,8 @@
 #include <rviz_common/uniform_string_stream.hpp>
 #include <rviz_common/view_manager.hpp>
 
+#include <QPainterPath>
+
 #include "rviz_common/logging.hpp"
 #include "rviz_common/msg_conversions.hpp"
 #include "rviz_common/validate_floats.hpp"

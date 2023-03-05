@@ -17,6 +17,7 @@ find_package(rviz_common REQUIRED)
 find_package(rviz_rendering REQUIRED)
 find_package(rviz_ogre_vendor REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Widgets Test)
+find_package(Qt5 REQUIRED COMPONENTS Gui)
 find_package(image_transport REQUIRED)
 find_package(cv_bridge REQUIRED)
 
@@ -35,6 +36,7 @@ find_package(tf2_ros REQUIRED)
 find_package(urdf REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(diagnostic_msgs REQUIRED)
+find_package(actionlib_msgs REQUIRED)
 
 find_package(jsk_footstep_msgs REQUIRED)
 find_package(jsk_gui_msgs REQUIRED)
@@ -120,6 +122,7 @@ ament_target_dependencies(jsk_rviz_plugins
   geometry_msgs
   nav_msgs
   diagnostic_msgs
+  actionlib_msgs
   jsk_footstep_msgs
   jsk_gui_msgs
   jsk_hark_msgs
@@ -141,7 +144,7 @@ if (NOT WIN32)
 endif()
 
 # Link non ament packages
-target_link_libraries(jsk_rviz_plugins Qt5::Widgets)
+target_link_libraries(jsk_rviz_plugins Qt5::Widgets Qt5::Gui)
 
 # prevent pluginlib from using boost
 # target_compile_definitions(jsk_rviz_plugins PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
