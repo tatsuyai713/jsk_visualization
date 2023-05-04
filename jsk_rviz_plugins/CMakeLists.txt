@@ -20,6 +20,7 @@ find_package(Qt5 REQUIRED COMPONENTS Widgets Test)
 find_package(Qt5 REQUIRED COMPONENTS Gui)
 find_package(image_transport REQUIRED)
 find_package(cv_bridge REQUIRED)
+find_package(Boost REQUIRED)
 
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
@@ -46,7 +47,7 @@ find_package(jsk_rviz_plugin_msgs REQUIRED)
 find_package(jsk_topic_tools REQUIRED)
 
 # for Ogre include files
-include_directories(${ADDITIONAL_INCLUDE_DIRS} ${OGRE_INCLUDE_DIRS} ${OGRE_INCLUDE_DIRS}/Paging)
+include_directories(${ADDITIONAL_INCLUDE_DIRS} ${OGRE_INCLUDE_DIRS} ${OGRE_INCLUDE_DIRS}/Paging ${Boost_INCLUDE_DIRS})
 
 # Qt5 boilerplate options from http://doc.qt.io/qt-5/cmake-manual.html
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -131,11 +132,11 @@ ament_target_dependencies(jsk_rviz_plugins
   jsk_topic_tools
   )
 
-target_include_directories(jsk_rviz_plugins
-  PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-  )
+# target_include_directories(jsk_rviz_plugins
+#   PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   $<INSTALL_INTERFACE:include>
+#   )
 
 if (NOT WIN32)
   ament_environment_hooks(
@@ -154,10 +155,9 @@ pluginlib_export_plugin_description_file(rviz_common plugins_description.xml)
 # replaces catkin_package(LIBRARIES jsk_rviz_plugins) 
 ament_export_libraries(jsk_rviz_plugins)
 
-ament_export_include_directories(include)
+# ament_export_include_directories(include)
 ament_export_targets(export_jsk_rviz_plugins HAS_LIBRARY_TARGET)
 ament_export_dependencies(
-  Qt5
   rviz_common
   cv_bridge
   image_transport
@@ -174,6 +174,7 @@ ament_export_dependencies(
   urdf
   visualization_msgs
   diagnostic_msgs
+  actionlib_msgs
   jsk_footstep_msgs
   jsk_gui_msgs
   jsk_hark_msgs
@@ -193,7 +194,7 @@ install(TARGETS
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
-  INCLUDES DESTINATION include
+  # INCLUDES DESTINATION include
   )
 
 install(DIRECTORY
